@@ -26,6 +26,10 @@ public class Process {
         return priority;
     }
 
+    public int getCurrentEvent() {return events.get(eventsIndex);}
+
+    public void updateCurrentEvent(Integer update) {events.set(eventsIndex, update);}
+
     public void setPriority(int priority) {
         this.priority = priority;
     }
