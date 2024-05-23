@@ -83,9 +83,7 @@ public class Process {
         this.QAddTime = QAddTime;
     }
 
-    public int getCurrentEvent() {
-        return events.get(eventsIndex);
-    }
+
 
     public void updateCurrentEvent(Integer update) {
         events.set(eventsIndex, update);
