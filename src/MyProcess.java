@@ -1,23 +1,21 @@
 package src;
 
 import java.util.ArrayList;
+public class MyProcess {
+    String ID;
+    int priority;
+    ArrayList<Integer> events;
+    int eventsIndex;
+    int waitTime;
+    int turnAroundTime;
+    int responseTime;
+    int QAddTime;
 
-public class Process {
-    private String ID;
-    private int priority;
-    private ArrayList<Integer> events;
-    private int eventsIndex;
-    private int waitTime;
-    private int turnAroundTime;
-    private int responseTime;
-    private int QAddTime;
+    int arrivalTime;
+    boolean flag;
 
     public String getID() {
         return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
     }
 
     public int getPriority() {
@@ -38,11 +36,15 @@ public class Process {
     public ArrayList<Integer> getEvents() {
         return events;
     }
-
-    public void setEvents(ArrayList<Integer> events) {
-        this.events = events;
+    public int getNextEventDuration() {
+        if (eventsIndex < events.size()) {
+            return events.get(eventsIndex);
+        }
+        return -1;
     }
-
+    public void moveIndex() {
+        eventsIndex++;
+    }
     public int getEventsIndex() {
         return eventsIndex;
     }
@@ -83,24 +85,19 @@ public class Process {
         this.QAddTime = QAddTime;
     }
 
-    public int getCurrentEvent() {
-        return events.get(eventsIndex);
-    }
+    MyProcess(String ID, ArrayList<Integer> events) {
+        this.events = events;
+        eventsIndex = 0;
+        waitTime = 0;
+        turnAroundTime = 0;
+        responseTime = 0;
+        QAddTime = 0;
+        priority = 0;
 
-    public void updateCurrentEvent(Integer update) {
-        events.set(eventsIndex, update);
-    }
-
-
-    public Process(String ID) {
         this.ID = ID;
-        this.events = new ArrayList<>();
-        this.eventsIndex = 0;
-        this.waitTime = 0;
-        this.turnAroundTime = 0;
-        this.responseTime = 0;
-        this.QAddTime = 0;
-        this.priority = 0;
+        this.flag = true;
+
     }
+
 }
 
