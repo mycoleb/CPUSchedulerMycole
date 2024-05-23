@@ -1,4 +1,5 @@
 package src;
+import java.util.ArrayList;
 
 public class Scheduler {
     ArrayList<Process> processes;
