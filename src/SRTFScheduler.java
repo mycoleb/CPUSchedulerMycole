@@ -39,7 +39,7 @@ public class SRTFScheduler {
             if (runningProcess == null && !processQueue.isEmpty()) {
                 moveProcessOntoCPU();
             }
-            if (runningProcess.getCurrentEvent() == 0) {
+            if (runningProcess != null && runningProcess.getCurrentEvent() == 0) {
                 processToIO();
                 moveProcessOntoCPU();
             }
