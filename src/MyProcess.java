@@ -1,25 +1,21 @@
 package src;
 
 import java.util.ArrayList;
-
-public class Process {
+public class MyProcess {
     String ID;
     int priority;
     ArrayList<Integer> events;
-
     int eventsIndex;
     int waitTime;
     int turnAroundTime;
     int responseTime;
     int QAddTime;
 
+    int arrivalTime;
+    boolean flag;
 
     public String getID() {
         return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
     }
 
     public int getPriority() {
@@ -40,11 +36,15 @@ public class Process {
     public ArrayList<Integer> getEvents() {
         return events;
     }
-
-    public void setEvents(ArrayList<Integer> events) {
-        this.events = events;
+    public int getNextEventDuration() {
+        if (eventsIndex < events.size()) {
+            return events.get(eventsIndex);
+        }
+        return -1;
     }
-
+    public void moveIndex() {
+        eventsIndex++;
+    }
     public int getEventsIndex() {
         return eventsIndex;
     }
@@ -85,8 +85,8 @@ public class Process {
         this.QAddTime = QAddTime;
     }
 
-    Process(String ID) {
-        events = new ArrayList<Integer>();
+    MyProcess(String ID, ArrayList<Integer> events) {
+        this.events = events;
         eventsIndex = 0;
         waitTime = 0;
         turnAroundTime = 0;
@@ -95,6 +95,7 @@ public class Process {
         priority = 0;
 
         this.ID = ID;
+        this.flag = true;
 
     }
 
