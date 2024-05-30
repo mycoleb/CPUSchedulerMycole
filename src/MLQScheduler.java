@@ -1,10 +1,15 @@
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 
 /**
- * Represents a process with an ID, burst time, and priority.
+ * This is my MLQ Scheduler
+ * 
+ * Author: Mycole Brown
  */
 class Process {
     int id;
@@ -90,7 +95,7 @@ class Process {
  * Multi-Level Queue (MLQ) Scheduler that schedules processes based on their priority and a time quantum.
  */
 class MLQScheduler {
-    private List<List<Process>> queues;
+    List<List<Process>> queues;
     private int timeQuantum;
     private int currentTime = 0;
     private boolean printDetailedOutput = true;
@@ -257,5 +262,65 @@ class MLQScheduler {
         System.out.println("Average Waiting Time: " + (double) totalWaitingTime / processes.size());
         System.out.println("Average Turnaround Time: " + (double) totalTurnaroundTime / processes.size());
         System.out.println("Average Response Time: " + (double) totalResponseTime / processes.size());
+    }
+}
+
+/**
+ * Test class for MLQScheduler.
+ */
+public class MLQSchedulerTest {
+
+    private MLQScheduler scheduler;
+    private Process process1;
+    private Process process2;
+    private Process process3;
+
+    /**
+     * Sets up the test environment.
+     */
+    @BeforeEach
+    public void setUp() {
+        scheduler = new MLQScheduler(3, 10);
+        process1 = new Process(1, 5, 0);
+        process2 = new Process(2, 10, 1);
+        process3 = new Process(3, 15, 2);
+
+        scheduler.addProcess(process1);
+        scheduler.addProcess(process2);
+        scheduler.addProcess(process3);
+    }
+
+    /**
+     * Tests the addition of processes to the scheduler.
+     */
+    @Test
+    public void testAddProcess() {
+        List<Process> queue0 = scheduler.queues.get(0);
+        List<Process> queue1 = scheduler.queues.get(1);
+        List<Process> queue2 = scheduler.queues.get(2);
+
+        assertTrue(queue0.contains(process1));
+        assertTrue(queue1.contains(process2));
+        assertTrue(queue2.contains(process3));
+    }
+
+    /**
+     * Tests the execution of processes by the scheduler.
+     */
+    @Test
+    public void testRunScheduler() {
+        scheduler.run();
+
+        // Verify the turn around time and wait time for process1
+        assertEquals(5, process1.getTurnAroundTime());
+        assertEquals(0, process1.getWaitTime());
+        
+        // Verify the turn around time and wait time for process2
+        assertEquals(10, process2.getTurnAroundTime());
+        assertEquals(0, process2.getWaitTime());
+
+        // Verify the turn around time and wait time for process3
+        assertEquals(15, process3.getTurnAroundTime());
+        assertEquals(0, process3.getWaitTime());
     }
 }
